@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,12 +18,14 @@
             height: 100vh;
             overflow: hidden;
         }
+
         .header {
             width: 100%;
             text-align: center;
             padding: 10px;
             border-bottom: 2px solid #33ff33;
         }
+
         .terminal {
             background: #0d0d0d;
             color: #33ff33;
@@ -34,6 +37,7 @@
             overflow-y: auto;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
+
         .typewriter-text {
             display: inline-block;
             white-space: nowrap;
@@ -41,60 +45,94 @@
             overflow: hidden;
             border-right: .15em solid #33ff33;
         }
+
         @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
         }
+
         @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: #33ff33; }
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #33ff33;
+            }
         }
+
         footer {
             margin-top: 10px;
             font-size: 12px;
             color: #666;
         }
+
+        button {
+            width: 10%;
+            height: 2%;
+        }
+
+        .linea {
+            display: block;
+        }
     </style>
+
 </head>
+
 <body>
     <div class="header">
         <h1>Secure Access Terminal</h1>
     </div>
-    <div class="terminal">
-        <div class="typewriter-text">Initializing system...</div>
-    </div>
-    <footer>© 2024 Secure Access Systems</footer>
+    <div id="terminal" class="terminal"></div>
     <script>
-        // This script simulates the continuous printing of text like in a hacker movie
-        const terminal = document.querySelector('.terminal');
+        const terminal = document.getElementById('terminal');
         const messages = [
             'Initializing system...',
             'Connecting to secure server...',
             'Bypassing firewall...',
             'Decrypting data...',
             'Establishing encrypted connection...',
-            'Access granted. Welcome, agent.'
+            'Access granted...',
+            'Exporting archives...',
         ];
         let messageIndex = 0;
+        let charIndex = 0;
+        let currentDiv = null;
+
         function typeMessage() {
             if (messageIndex < messages.length) {
+                if (!currentDiv) {
+                    currentDiv = document.createElement('div');
+                    currentDiv.className = 'typewriter-text';
+                    currentDiv.style.display = "block";
+                    terminal.appendChild(currentDiv);
+                }
                 const message = messages[messageIndex];
-                const div = document.createElement('div');
-                div.className = 'typewriter-text';
-                terminal.appendChild(div);
-                let i = 0;
-                const interval = setInterval(() => {
-                    div.textContent = message.slice(0, i + 1);
-                    i++;
-                    if (i === message.length) {
-                        clearInterval(interval);
-                        messageIndex++;
-                        setTimeout(typeMessage, 1000); // Slight delay before the next message
-                    }
-                }, 100);
+                if (charIndex < message.length) {
+                    currentDiv.textContent += message.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeMessage, 100);
+                } else {
+                    charIndex = 0;
+                    currentDiv = null;
+                    messageIndex++;
+                    setTimeout(typeMessage, 1000);
+                }
             }
         }
         typeMessage();
+        setTimeout(function () {
+            window.location.href = "https://wilkcraft.github.io/Calculadora/";
+        }, 30000);
     </script>
 </body>
+<footer>© 2024 Secure Access Systems</footer>
+
 </html>
